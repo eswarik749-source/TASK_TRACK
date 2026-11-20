@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTrack Pro | Smart Productivity</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- AUTHENTICATION -->
+<section id="authPage" class="auth-page">
+    <div class="auth-visual">
+        <div class="visual-orb orb-one"></div>
+        <div class="visual-orb orb-two"></div>
+        <div class="auth-brand">✦ TaskTrack Pro</div>
+        <div class="auth-message">
+            <span class="eyebrow">YOUR DAY. YOUR CONTROL.</span>
+            <h1>Make every<br><span>moment</span> count.</h1>
+            <p>Organize your tasks, build better habits and turn your goals into reality.</p>
+            <div class="mini-stats">
+                <div><strong>Focus</strong><small>Work smarter</small></div>
+                <div><strong>Progress</strong><small>Grow daily</small></div>
+                <div><strong>Achieve</strong><small>Dream bigger</small></div>
+            </div>
+        </div>
+        <div class="auth-bottom">A smarter way to manage your everyday life.</div>
+    </div>
+
+    <div class="auth-form-side">
+        <div class="auth-form" id="loginForm">
+            <div class="mobile-brand">✦ TaskTrack Pro</div>
+            <span class="eyebrow">WELCOME BACK</span>
+            <h2>Sign in to your account</h2>
+            <p class="muted">Continue your productivity journey.</p>
+
+            <button class="google-btn" onclick="googleDemo()">
+                <b class="google-icon">G</b> Continue with Google
+            </button>
+            <div class="separator"><span>OR CONTINUE WITH EMAIL</span></div>
+
+            <form onsubmit="login(event)">
+                <label>Email address</label>
+                <input id="loginEmail" type="email" placeholder="you@example.com" required>
+                <label>Password</label>
+                <input id="loginPassword" type="password" placeholder="Enter your password" required>
+                <button class="primary-btn full-btn">Sign In →</button>
+            </form>
+            <p class="auth-switch">Don't have an account? <a onclick="showRegister()">Create account</a></p>
+            <p class="tiny-note">Demo authentication · Data stored in this browser</p>
+        </div>
+
+        <div class="auth-form hidden" id="registerForm">
+            <div class="mobile-brand">✦ TaskTrack Pro</div>
+            <span class="eyebrow">GET STARTED</span>
+            <h2>Create your account</h2>
+            <p class="muted">Start organizing your life today.</p>
+            <form onsubmit="register(event)">
+                <label>Full name</label>
+                <input id="regName" type="text" placeholder="Your name" required>
+                <label>Email address</label>
+                <input id="regEmail" type="email" placeholder="you@example.com" required>
+                <label>Password</label>
+                <input id="regPassword" type="password" minlength="6" placeholder="Minimum 6 characters" required>
+                <label>Confirm password</label>
+                <input id="regConfirm" type="password" minlength="6" placeholder="Confirm password" required>
+                <button class="primary-btn full-btn">Create Account →</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a onclick="showLogin()">Sign in</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN APPLICATION -->
+<div id="app" class="app hidden">
+
+    <aside class="sidebar">
+        <div class="brand">✦ <span>TaskTrack</span><small>PRO</small></div>
+
+        <div class="user-mini">
+            <div class="avatar" id="sideAvatar">U</div>
+            <div><strong id="sideName">User</strong><small>Personal workspace</small></div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+        <nav>
+            <button class="nav-link active" data-page="dashboard"><span>◫</span> Dashboard</button>
+            <button class="nav-link" data-page="tasks"><span>☷</span> My Tasks</button>
+            <button class="nav-link" data-page="calendar"><span>▦</span> Calendar</button>
+            <button class="nav-link" data-page="focus"><span>◷</span> Focus Mode</button>
+            <button class="nav-link" data-page="analytics"><span>▥</span> Analytics</button>
+            <button class="nav-link" data-page="house"><span>⌂</span> Dream House</button>
+        </nav>
+
+        <div class="nav-label">ACCOUNT</div>
+        <nav>
+            <button class="nav-link" data-page="profile"><span>◎</span> My Profile</button>
+            <button class="nav-link" data-page="settings"><span>⚙</span> Settings</button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-tip">
+                <span>✧ Daily reminder</span>
+                <p>Small steps every day lead to big achievements.</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">↪ Sign Out</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+                <span class="top-date" id="topDate"></span>
+            </div>
+            <div class="top-actions">
+                <button class="icon-btn" onclick="enableNotifications()" title="Enable reminders">♧</button>
+                <div class="top-avatar" id="topAvatar">U</div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboardPage" class="page">
+            <div class="welcome-row">
+                <div>
+                    <span class="eyebrow">YOUR PRODUCTIVITY SPACE</span>
+                    <h1 id="welcomeTitle">Good morning!</h1>
+                    <p class="muted">Let's make today productive and meaningful.</p>
+                </div>
+                <button class="primary-btn" onclick="openTaskModal()">＋ Add New Task</button>
+            </div>
+
+            <div class="hero-card">
+                <div>
+                    <span class="hero-tag">✦ DAILY OVERVIEW</span>
+                    <h2>Make today<br>count.</h2>
+                    <p id="heroMessage">Every completed task brings you closer to your goals.</p>
+                    <button class="hero-btn" onclick="navigate('tasks')">View My Tasks →</button>
+                </div>
+                <div class="hero-art">
+                    <div class="hero-circle"></div>
+                    <div class="hero-card-art">✦<br>✓</div>
+                    <div class="floating-note">Keep going!</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon purple">☷</div><span>Total Tasks</span><h2 id="totalStat">0</h2><small>All your tasks</small></div>
+                <div class="stat-card"><div class="stat-icon orange">◷</div><span>Pending</span><h2 id="pendingStat">0</h2><small>Waiting to be done</small></div>
+                <div class="stat-card"><div class="stat-icon green">✓</div><span>Completed</span><h2 id="completedStat">0</h2><small>Successfully finished</small></div>
+                <div class="stat-card"><div class="stat-icon red">⚠</div><span>Overdue</span><h2 id="overdueStat">0</h2><small>Need your attention</small></div>
+            </div>
+
+            <div class="content-grid">
+                <div class="panel">
+                    <div class="panel-heading"><div><h3>Today's Progress</h3><p class="muted">Your daily achievement</p></div><span class="progress-percent" id="progressPercent">0%</span></div>
+                    <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+                    <div class="progress-info"><span id="progressText">0 of 0 completed</span><span>Daily goal</span></div>
+                    <div class="mini-chart"><canvas id="weeklyChart"></canvas></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading"><div><h3>Today's Tasks</h3><p class="muted">Your next steps</p></div><a onclick="navigate('tasks')">View all →</a></div>
+                    <div id="todayList" class="task-list"></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading"><div><h3>Upcoming Deadlines</h3><p class="muted">Stay ahead of your schedule</p></div><a onclick="navigate('calendar')">Calendar →</a></div>
+                <div id="upcomingList" class="upcoming-list"></div>
+            </div>
+        </section>
+
+        <!-- TASKS -->
+        <section id="tasksPage" class="page hidden">
+            <div class="page-heading">
+                <div><span class="eyebrow">STAY ORGANIZED</span><h1>My Tasks</h1><p class="muted">Plan, organize and complete your work.</p></div>
+                <button class="primary-btn" onclick="openTaskModal()">＋ Create Task</button>
+            </div>
+            <div class="task-toolbar">
+                <input id="searchInput" type="search" placeholder="⌕ Search tasks..." oninput="renderTasks()">
+                <select id="filterStatus" onchange="renderTasks()"><option value="all">All Status</option><option>Pending</option><option>In Progress</option><option>Completed</option></select>
+                <select id="filterPriority" onchange="renderTasks()"><option value="all">All Priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
+                <select id="sortTasks" onchange="renderTasks()"><option value="date">Sort by deadline</option><option value="priority">Sort by priority</option><option value="created">Recently created</option></select>
+            </div>
+            <div class="task-summary" id="taskSummary"></div>
+            <div id="taskList" class="task-grid"></div>
+        </section>
+
+        <!-- CALENDAR -->
+        <section id="calendarPage" class="page hidden">
+            <div class="page-heading"><div><span class="eyebrow">PLAN AHEAD</span><h1>Calendar</h1><p class="muted">Your schedule at a glance.</p></div></div>
+            <div class="panel">
+                <div class="calendar-heading">
+                    <button class="icon-btn" onclick="changeMonth(-1)">←</button>
+                    <h2 id="calendarMonth"></h2>
+                    <button class="icon-btn" onclick="changeMonth(1)">→</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+            <div class="panel"><h3 id="selectedDateTitle">Selected date</h3><div id="calendarTasks" class="task-list"></div></div>
+        </section>
+
+        <!-- FOCUS -->
+        <section id="focusPage" class="page hidden">
+            <div class="page-heading"><div><span class="eyebrow">DEEP WORK</span><h1>Focus Mode</h1><p class="muted">One task. One goal. Full concentration.</p></div></div>
+            <div class="focus-layout">
+                <div class="panel focus-panel">
+                    <span class="eyebrow">POMODORO SESSION</span>
+                    <select id="focusTask" class="focus-select"><option value="">Choose a task</option></select>
+                    <div class="timer-circle"><div><h1 id="timerDisplay">25:00</h1><span id="timerLabel">READY TO FOCUS</span></div></div>
+                    <div class="timer-modes"><button class="mode-btn active" onclick="setTimer(25,'Focus')">Focus 25m</button><button class="mode-btn" onclick="setTimer(5,'Short Break')">Break 5m</button><button class="mode-btn" onclick="setTimer(15,'Long Break')">Break 15m</button></div>
+                    <div class="timer-actions"><button class="primary-btn" id="timerStart" onclick="startTimer()">Start Focus</button><button class="secondary-btn" onclick="resetTimer()">Reset</button></div>
+                </div>
+                <div class="panel"><h3>Focus Tips</h3><div class="tip-item">✦ Remove distractions and silence notifications.</div><div class="tip-item">✦ Choose one task at a time.</div><div class="tip-item">✦ Take breaks to refresh your mind.</div><div class="tip-item">✦ Celebrate your progress.</div></div>
+            </div>
+        </section>
+
+        <!-- ANALYTICS -->
+        <section id="analyticsPage" class="page hidden">
+            <div class="page-heading"><div><span class="eyebrow">YOUR PERFORMANCE</span><h1>Productivity Analytics</h1><p class="muted">Understand your productivity patterns.</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><span>Completion Rate</span><h2 id="completionRate">0%</h2></div>
+                <div class="stat-card"><span>Total Time Tracked</span><h2 id="totalTime">0m</h2></div>
+                <div class="stat-card"><span>Consistency Score</span><h2 id="consistency">0%</h2></div>
+                <div class="stat-card"><span>Tasks Completed</span><h2 id="analyticsCompleted">0</h2></div>
+            </div>
+            <div class="content-grid">
+                <div class="panel"><h3>Weekly Productivity</h3><canvas id="analyticsChart"></canvas></div>
+                <div class="panel"><h3>Task Status</h3><canvas id="statusChart"></canvas></div>
+            </div>
+            <div class="panel"><h3>Productivity Insights</h3><div id="insights"></div></div>
+        </section>
+
+        <!-- DREAM HOUSE -->
+        <section id="housePage" class="page hidden">
+            <div class="page-heading"><div><span class="eyebrow">YOUR PERSONAL REWARD SPACE</span><h1>Dream House</h1><p class="muted">Build your dream home through your achievements.</p></div></div>
+            <div class="house-panel">
+                <div class="house-info"><span class="eyebrow">YOUR PROGRESS</span><h2 id="houseTitle">Your Dream Home</h2><p id="houseDescription">Complete tasks and unlock new parts of your home.</p><div class="house-progress"><div id="houseProgress"></div></div><p id="houseCount">0 completed tasks</p><div id="houseMilestones"></div></div>
+                <div class="house-scene">
+                    <div class="sun"></div>
+                    <div class="cloud cloud-one"></div><div class="cloud cloud-two"></div>
+                    <div class="ground"></div>
+                    <div class="house-3d" id="dreamHouse">
+                        <div class="house-roof"></div>
+                        <div class="house-body">
+                            <div class="house-window window-one"></div><div class="house-window window-two"></div>
+                            <div class="house-door"></div>
+                        </div>
+                        <div class="house-side"></div>
+                        <div class="house-garden">🌳</div>
+                    </div>
+                    <div class="house-label">✦ YOUR DREAM HOME</div>
+                </div>
+            </div>
+            <div class="panel"><h3>House Milestones</h3><div id="houseUnlocks" class="unlock-grid"></div></div>
+        </section>
+
+        <!-- PROFILE -->
+        <section id="profilePage" class="page hidden">
+            <div class="page-heading"><div><span class="eyebrow">YOUR ACCOUNT</span><h1>My Profile</h1><p class="muted">Manage your personal information.</p></div></div>
+            <div class="panel profile-panel">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <form onsubmit="saveProfile(event)" class="profile-form">
+                    <label>Full Name</label><input id="profileName" required>
+                    <label>Email Address</label><input id="profileEmail" disabled>
+                    <label>Daily Task Limit</label><input id="dailyLimit" type="number" min="1" max="50">
+                    <button class="primary-btn">Save Changes</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="settingsPage" class="page hidden">
+            <div class="page-heading"><div><span class="eyebrow">PERSONALIZE</span><h1>Settings</h1><p class="muted">Customize your workspace.</p></div></div>
+            <div class="panel settings-panel">
+                <div class="setting-row"><div><h3>Dark Mode</h3><p class="muted">Change your workspace appearance.</p></div><label class="switch"><input type="checkbox" id="darkToggle" onchange="toggleDark(this.checked)"><span></span></label></div>
+                <div class="setting-row"><div><h3>Daily Task Limit</h3><p class="muted">Maximum tasks allowed per day.</p></div><input type="number" id="settingsLimit" min="1" max="50" value="8"></div>
+                <div class="setting-row"><div><h3>Browser Notifications</h3><p class="muted">Enable task reminder notifications.</p></div><button class="secondary-btn" onclick="enableNotifications()">Enable</button></div>
+                <button class="primary-btn" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </section>
+
+        <footer class="footer">Made with ✦ for a more productive life · TaskTrack Pro</footer>
+    </main>
+</div>
+
+<!-- TASK MODAL -->
+<div class="modal-overlay hidden" id="taskModal">
+    <div class="modal">
+        <div class="modal-heading"><div><span class="eyebrow">TASK MANAGEMENT</span><h2 id="modalTitle">Create New Task</h2></div><button class="close-btn" onclick="closeTaskModal()">×</button></div>
+        <form id="taskForm" onsubmit="saveTask(event)">
+            <input type="hidden" id="editTaskId">
+            <label>Task Title *</label><input id="taskTitle" required placeholder="What do you need to do?">
+            <label>Description</label><textarea id="taskDescription" placeholder="Add task details..."></textarea>
+            <div class="form-row">
+                <div><label>Category</label><select id="taskCategory"><option>Personal</option><option>Study</option><option>Work</option><option>Health</option><option>Other</option></select></div>
+                <div><label>Priority</label><select id="taskPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
+            </div>
+            <div class="form-row">
+                <div><label>Deadline *</label><input id="taskDeadline" type="date" required></div>
+                <div><label>Estimated Duration (minutes)</label><input id="taskDuration" type="number" min="1" value="30"></div>
+            </div>
+            <label>Status</label><select id="taskStatus"><option>Pending</option><option>In Progress</option><option>Completed</option></select>
+            <label>Subtasks (one per line)</label><textarea id="taskSubtasks" placeholder="Read chapter 1&#10;Prepare notes&#10;Complete exercises"></textarea>
+            <button class="primary-btn full-btn">Save Task</button>
+        </form>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
